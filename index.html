@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>我的網站</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <header>
+            <nav class="navbar">
+                <div class="container">
+                    <h1 class="logo">我的網站</h1>
+                    <ul class="nav-menu">
+                        <li><a href="#home">首頁</a></li>
+                        <li><a href="#about">關於</a></li>
+                        <li><a href="#services">服務</a></li>
+                        <li><a href="#contact">聯絡</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <section id="home" class="hero">
+                <div class="container">
+                    <h2>歡迎來到我的網站</h2>
+                    <p>這是一個簡單而優雅的網站範本</p>
+                    <button class="btn">了解更多</button>
+                </div>
+            </section>
+
+            <section id="about" class="about">
+                <div class="container">
+                    <h2>關於我們</h2>
+                    <p>我們提供最優質的服務，致力於為客戶創造價值。</p>
+                </div>
+            </section>
+
+            <section id="services" class="services">
+                <div class="container">
+                    <h2>我們的服務</h2>
+                    <div class="service-grid">
+                        <div class="service-card">
+                            <h3>服務 1</h3>
+                            <p>提供高品質的第一項服務</p>
+                        </div>
+                        <div class="service-card">
+                            <h3>服務 2</h3>
+                            <p>提供高品質的第二項服務</p>
+                        </div>
+                        <div class="service-card">
+                            <h3>服務 3</h3>
+                            <p>提供高品質的第三項服務</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="contact">
+                <div class="container">
+                    <h2>聯絡我們</h2>
+                    <form class="contact-form">
+                        <input type="text" placeholder="您的名字" required />
+                        <input type="email" placeholder="您的信箱" required />
+                        <textarea
+                            placeholder="您的訊息"
+                            rows="5"
+                            required
+                        ></textarea>
+                        <button type="submit" class="btn">送出</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2026 我的網站。版權所有。</p>
+            </div>
+        </footer>
+
+        <script src="script.js"></script>
+    </body>
+</html>
