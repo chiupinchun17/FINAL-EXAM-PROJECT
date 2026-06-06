@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>我的網站 - 期末專題</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='styles.css') }}"
+        />
+    </head>
+    <body>
+        <header>
+            <nav class="navbar">
+                <div class="container nav-container">
+                    <div class="logo">我的網站</div>
+                    <ul class="nav-links">
+                        <li><a href="#home">首頁</a></li>
+                        <li><a href="#about">關於</a></li>
+                        <li><a href="#board" class="active">留言板</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main class="main-container">
+            <section id="home" class="hero section-card">
+                <div class="container">
+                    <h1>歡迎來到我的網站</h1>
+                    <p>這是一個結合 Python SQLite 後端的期末專題測試網站</p>
+                </div>
+            </section>
+
+            <section id="board" class="board section-card">
+                <h2>個人動態與留言板</h2>
+
+                <form action="/submit_post" method="POST" class="post-form">
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="你的訪客暱稱"
+                        required
+                    />
+                    <textarea
+                        name="content"
+                        placeholder="分享今天的動態..."
+                        rows="4"
+                        required
+                    ></textarea>
+                    <input
+                        type="url"
+                        name="image_url"
+                        placeholder="貼上圖片網址 (選填，例如 Imgur 的連結)"
+                    />
+                    <button type="submit" class="btn-primary">發布貼文</button>
+                </form>
+
+                <div class="posts-grid">
+                    {% for post in posts %}
+                    <div class="post-card">
+                        <div class="post-header">
+                            <h3>{{ post['username'] }}</h3>
+                            <span class="post-time"
+                                >{{ post['created_at'] }}</span
+                            >
+                        </div>
+                        <p class="post-content">{{ post['content'] }}</p>
+
+                        {% if post['image_url'] %}
+                        <div class="post-image-wrapper">
+                            <img
+                                src="{{ post['image_url'] }}"
+                                alt="分享的圖片"
+                                class="post-image"
+                            />
+                        </div>
+                        {% endif %}
+
+                        <div class="post-actions">
+                            <form action="/like/{{ post['id'] }}" method="POST">
+                                <button type="submit" class="like-btn">
+                                    ❤️ 讚 ({{ post['likes'] }})
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="empty-state">
+                        <p>目前還沒有任何貼文，搶先發布第一篇吧！</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2026 我的網站。版權所有。</p>
+            </div>
+        </footer>
+    </body>
+</html>
