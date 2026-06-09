@@ -77,15 +77,15 @@
     <div class="main-wrapper">
         
         <div class="ai-sidebar">
-            <h3 style="margin-top: 0; color: #4a148c; display: flex; align-items: center;">🤖 本地端 AI 課業小助手</h3>
-            <p style="font-size: 12px; color: #6a1b9a; margin-bottom: 12px;">由本地端開源神經網路引擎驅動，100% 免外部 API 金鑰、隱私安全！</p>
+            <h3 style="margin-top: 0; color: #4a148c; display: flex; align-items: center;">🤖 系統專屬 AI 小助手</h3>
+            <p style="font-size: 12px; color: #6a1b9a; margin-bottom: 12px;">智慧分流架構：本地端自動啟動開源引擎，雲端自動切換極速智慧保護模式。</p>
             
             <div class="ai-chat-box" id="aiChatBox">
-                <div class="msg bot">你好！我是常駐在留言板的 AI 助手。你可以問我任何問題，我會直接用後台主機的算力來回答你喔！</div>
+                <div class="msg bot">你好！我是常駐在留言板的 AI 助手。你可以問我任何關於這個網站功能、天氣或新聞的問題喔！</div>
             </div>
             
             <div style="display: flex; gap: 6px;">
-                <input type="text" id="aiInput" placeholder="輸入你想提問的問題..." style="flex: 1; padding: 8px; border: 1px solid #b39ddb; border-radius: 20px; outline: none; font-size: 13px;" onkeypress="if(event.keyCode==13) sendAiMessage()">
+                <input type="text" id="aiInput" placeholder="輸入問題 (如: 專題有什麼功能)..." style="flex: 1; padding: 8px; border: 1px solid #b39ddb; border-radius: 20px; outline: none; font-size: 13px;" onkeypress="if(event.keyCode==13) sendAiMessage()">
                 <button onclick="sendAiMessage()" style="background: #7b1fa2; color: white; border: none; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 13px;">送出</button>
             </div>
         </div>
@@ -192,17 +192,14 @@
             
             if (!prompt) return;
             
-            // 1. 在畫面上即時印出使用者的提問
             chatBox.innerHTML += `<div class="msg user">${prompt}</div>`;
             inputEl.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
             
-            // 2. 顯示 AI 正在思考的動態提示
             const botLoadingId = 'bot-loading-' + Date.now();
-            chatBox.innerHTML += `<div class="msg bot" id="${botLoadingId}">🤖 正在思考推理中...請給本地 CPU 一點時間...</div>`;
+            chatBox.innerHTML += `<div class="msg bot" id="${botLoadingId}">🤖 正在組織回答中...</div>`;
             chatBox.scrollTop = chatBox.scrollHeight;
             
-            // 3. 將資料送往後台 Python 的免 API 模型進行本地推理
             fetch('/ai_chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -219,7 +216,7 @@
             .catch(err => {
                 const loadingEl = document.getElementById(botLoadingId);
                 if (loadingEl) {
-                    loadingEl.innerText = "🤖 哎呀，運算超時，請再試一次！";
+                    loadingEl.innerText = "🤖 系統忙碌中，請再試一次！";
                 }
             });
         }
