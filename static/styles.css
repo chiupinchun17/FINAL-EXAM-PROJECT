@@ -1,164 +1,224 @@
-/* 全局設定 */
+/* ==========================================
+   1. 全局設定 (IG 潔淨風)
+   ========================================== */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #fafafa; /* IG 經典極淺灰背景 */
+    color: #262626;            /* IG 主要文字深灰 */
 }
 
-/* 導覽列 */
+/* ==========================================
+   2. 導覽列 (改為純白底、黑字、下方細線)
+   ========================================== */
 .navbar {
-    background: #333;
-    color: white;
-    padding: 1rem;
+    background: #ffffff;
+    color: #262626;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #dbdbdb; /* IG 經典分界細線 */
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 .nav-container {
     display: flex;
     justify-content: space-between;
-    max-width: 800px;
+    max-width: 600px; /* 縮窄寬度，更像手機版 IG 流暢感 */
     margin: 0 auto;
     align-items: center;
 }
 .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    font-family: 'Times New Roman', Times, serif, sans-serif; /* 模擬 IG 的手寫字體感 */
 }
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 15px;
+    gap: 22px;
     margin: 0;
 }
 .nav-links a {
-    color: white;
+    color: #737373; /* 未選中時是淡灰色 */
     text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
 }
 .nav-links a.active {
-    color: #007bff;
-    font-weight: bold;
+    color: #262626; /* 選中時是深黑 */
+    font-weight: 700;
 }
 
-/* 頁面主要容器與區塊 */
+/* ==========================================
+   3. 頁面容器與動態牆卡片
+   ========================================== */
 .main-container {
-    max-width: 800px;
+    max-width: 600px; /* IG 最完美的貼文牆寬度 */
     margin: 0 auto;
-    padding: 20px;
+    padding: 20px 0;   /* 左右貼邊，上下留空 */
 }
 .section-card {
-    background: white;
-    padding: 30px;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    padding: 25px 20px;
+    margin-bottom: 16px;
+    border: 1px solid #dbdbdb; /* 改為 IG 邊框，取代原本的大陰影 */
+    border-radius: 12px;       /* 新版 IG 的圓角 */
 }
 .section-card h2 {
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
+    font-size: 1.2rem;
+    color: #262626;
+    padding-bottom: 12px;
     margin-top: 0;
+    font-weight: 700;
 }
 
-/* 表單與按鈕 */
+/* ==========================================
+   4. 發文表單與按鈕 (改為 IG 限動/發文藍色)
+   ========================================== */
 .post-form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin: 20px 0 30px 0;
+    gap: 12px;
+    margin: 15px 0 10px 0;
 }
 .post-form input,
 .post-form textarea {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 12px;
+    font-size: 14px;
+    background-color: #fafafa;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
     font-family: inherit;
+    outline: none;
+}
+.post-form input:focus,
+.post-form textarea:focus {
+    border-color: #a8a8a8; /* 點擊時邊框變深 */
 }
 .btn-primary {
-    padding: 12px;
-    background: #007bff;
+    padding: 10px;
+    background: #0095f6; /* IG 官方標準「追蹤/發文」天藍色 */
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background 0.3s;
+    font-size: 14px;
+    font-weight: 700;
+    transition: background 0.2s;
 }
 .btn-primary:hover {
-    background: #0056b3;
+    background: #1877f2; /* 懸停時變深藍 */
 }
 
-/* 貼文卡片設計 */
+/* ==========================================
+   5. IG 貼文卡片設計 (精華修改區)
+   ========================================== */
 .post-card {
-    border: 1px solid #eee;
-    padding: 20px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    background: #fafafa;
+    border: 1px solid #dbdbdb;
+    padding: 0; /* 讓圖片可以左右塞滿卡片，跟 IG 一樣 */
+    margin-bottom: 16px;
+    border-radius: 12px;
+    background: #ffffff;
+    overflow: hidden; /* 確保內件圖片不會超出圓角 */
 }
 .post-header {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    border-bottom: 1px dashed #ddd;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: none; /* 拔掉原本的虛線，改用乾淨排版 */
 }
+/* 💡 小心機：幫名字前面加上一個類圓形大頭貼的感覺 */
 .post-header h3 {
     margin: 0;
-    color: #007bff;
+    font-size: 0.95rem;
+    color: #262626;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+}
+.post-header h3::before {
+    content: "";
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); /* IG 經典漸層色環 */
+    border-radius: 50%;
+    padding: 2px;
 }
 .post-time {
-    font-size: 0.85em;
-    color: #888;
+    font-size: 0.75rem;
+    color: #737373;
+    text-transform: uppercase;
 }
-.post-content {
-    line-height: 1.6;
-    color: #444;
-    margin-bottom: 15px;
-    white-space: pre-wrap; /* 讓留言可以正常換行 */
-}
+/* 讓圖片成為主角：上下貼緊 */
 .post-image-wrapper {
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 0;
+    background-color: #000; /* 如果圖片非正方形，兩側留黑 */
+    display: flex;
+    justify-content: center;
 }
 .post-image {
     max-width: 100%;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-height: 500px; /* 限制高度防止圖片過長 */
+    object-fit: contain;
+    border-radius: 0; /* 圖片在中間不留圓角 */
+    box-shadow: none;
+}
+/* 內文移到圖片下方，並留白 */
+.post-content {
+    padding: 16px 16px 8px 16px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #262626;
+    margin-bottom: 0;
+    white-space: pre-wrap;
 }
 
-/* 按讚區塊 */
+/* ==========================================
+   6. 愛心按讚區塊 (IG 紅粉愛心風)
+   ========================================== */
 .post-actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start; /* 改到左下角，跟 IG 的愛心位置一樣 */
+    padding: 0 16px 16px 16px;
 }
 .like-btn {
-    background: #ffeff5;
-    color: #ff4d85;
-    border: 1px solid #ffb3cc;
-    padding: 6px 12px;
+    background: transparent;  /* 去掉原本厚重的背景 */
+    color: #ff3040;           /* IG 經典愛心紅 */
+    border: 1px solid #ff3040;
+    padding: 6px 14px;
     border-radius: 20px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 600;
     transition: all 0.2s;
 }
 .like-btn:hover {
-    background: #ff4d85;
+    background: #ff3040;
     color: white;
 }
 
-/* 空白狀態與頁尾 */
+/* ==========================================
+   7. 空白狀態與頁尾
+   ========================================== */
 .empty-state {
     text-align: center;
-    padding: 30px;
-    color: #888;
-    border: 1px dashed #ccc;
-    border-radius: 8px;
+    padding: 40px;
+    color: #737373;
+    border: 1px dashed #dbdbdb;
+    border-radius: 12px;
+    background: #ffffff;
 }
 footer {
     text-align: center;
-    padding: 20px;
-    background: #333;
-    color: white;
-    margin-top: 40px;
+    padding: 24px;
+    background: #fafafa; /* 頁尾改為跟背景融合的淡灰色 */
+    color: #737373;      /* 字體變淡 */
+    font-size: 0.8rem;
+    border-top: 1px solid #dbdbdb;
+    margin-top: 60px;
 }
