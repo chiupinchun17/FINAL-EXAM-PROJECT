@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="我的網站" />
+        <title>我的網站</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <header>
+            <nav class="navbar">
+                <div class="container">
+                    <div class="logo">我的網站</div>
+                    <ul class="nav-links">
+                        <li><a href="#home">首頁</a></li>
+                        <li><a href="#about">關於</a></li>
+                        <li><a href="#services">服務</a></li>
+                        <li><a href="#contact">聯絡</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Hero Section -->
+            <section id="home" class="hero">
+                <div class="container">
+                    <h1>歡迎來到我的網站</h1>
+                    <p>這是一個基本的網站架構示例</p>
+                    <button class="btn">開始探索</button>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="about">
+                <div class="container">
+                    <h2>關於我們</h2>
+                    <p>這是關於我們的介紹文字。您可以在這裡添加您的信息。</p>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services" class="services">
+                <div class="container">
+                    <h2>我們的服務</h2>
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <h3>服務 1</h3>
+                            <p>描述您的服務內容</p>
+                        </div>
+                        <div class="service-card">
+                            <h3>服務 2</h3>
+                            <p>描述您的服務內容</p>
+                        </div>
+                        <div class="service-card">
+                            <h3>服務 3</h3>
+                            <p>描述您的服務內容</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="contact">
+                <div class="container">
+                    <h2>聯絡我們</h2>
+                    <form class="contact-form">
+                        <input type="text" placeholder="您的名字" required />
+                        <input type="email" placeholder="您的郵件" required />
+                        <textarea
+                            placeholder="訊息內容"
+                            rows="5"
+                            required
+                        ></textarea>
+                        <button type="submit" class="btn">發送訊息</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2026 我的網站。版權所有。</p>
+            </div>
+        </footer>
+
+        <script src="script.js"></script>
+    </body>
+</html>
