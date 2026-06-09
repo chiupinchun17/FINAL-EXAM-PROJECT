@@ -2,224 +2,56 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <title>班級動態留言板</title>
+    <title>登入系統</title>
     <style>
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; }
-        .nav-bar { text-align: right; padding: 12px 20px; background-color: #e1f5fe; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-size: 15px; }
-        
-        /* 左右雙欄主要佈局架構 */
-        .main-wrapper { display: flex; max-width: 1100px; margin: 20px auto; padding: 0 15px; gap: 25px; align-items: flex-start; }
-        
-        /* 🤖 左側固定 AI 視窗樣式 */
-        .ai-sidebar { width: 320px; background: #f3e5f5; border: 1px solid #d1c4e9; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); position: sticky; top: 20px; }
-        .ai-chat-box { background: white; border: 1px solid #e1bee7; border-radius: 8px; height: 280px; overflow-y: auto; padding: 10px; margin-bottom: 12px; font-size: 13px; }
-        .msg { margin-bottom: 10px; padding: 6px 10px; border-radius: 6px; line-height: 1.4; }
-        .msg.user { background: #e1f5fe; text-align: right; margin-left: 20px; color: #0277bd; }
-        .msg.bot { background: #f5f5f5; text-align: left; margin-right: 20px; color: #4a148c; border-left: 3px solid #8e24aa; }
-        
-        /* 右側原本的留言板主體區塊 */
-        .right-content { flex: 1; max-width: 650px; }
-        .container { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        
-        .post { border-bottom: 1px solid #eee; padding: 20px 0; position: relative; }
-        .post:last-child { border-bottom: none; }
-        .author { font-weight: bold; color: #1877f2; font-size: 16px; }
-        .time { color: #888; font-size: 12px; margin-top: 5px; }
-        .post-image { max-width: 100%; border-radius: 8px; margin-top: 10px; max-height: 350px; object-fit: cover; }
-        .like-section { margin-top: 12px; display: flex; align-items: center; margin-bottom: 15px; }
-        .like-btn { background-color: #f0f2f5; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; color: #65676b; }
-        textarea { width: 100%; padding: 12px; box-sizing: border-box; border: 1px solid #ccd0d5; border-radius: 8px; resize: none; font-size: 15px; }
-        .submit-btn { background-color: #1877f2; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; width: 100%; font-size: 16px; font-weight: bold; margin-top: 10px; }
-        
-        .weather-box { background-color: #f1f8e9; border: 1px solid #c5e1a5; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
-        .news-box { background-color: #fff8e1; border: 1px solid #ffe082; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
-        .news-item { background: white; padding: 10px; border-radius: 6px; margin-top: 6px; border: 1px solid #fff59d; }
-        summary { font-weight: bold; color: #b78103; cursor: pointer; font-size: 14px; }
-        
-        .comments-section { background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 10px; }
-        .comment-item { border-bottom: 1px dashed #e4e6eb; padding: 8px 0; font-size: 14px; }
-        .commenter { font-weight: bold; color: #4a4a4a; }
-        .comment-input { flex: 1; padding: 8px 12px; border: 1px solid #ccd0d5; border-radius: 20px; font-size: 14px; outline: none; }
-        .comment-submit { background-color: #42b72a; color: white; border: none; padding: 8px 16px; border-radius: 20px; margin-left: 8px; cursor: pointer; font-weight: bold; }
-        
-        .btn-delete { background-color: #ffebe9; color: #d73a49; border: 1px solid rgba(27,31,35,0.15); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; }
-        .btn-delete:hover { background-color: #cb2431; color: white; }
-        .admin-box { max-width: 1050px; margin: 20px auto; background: #fff0f1; border: 1px solid #ffccd0; padding: 20px; border-radius: 12px; }
-        .user-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #ffd5d8; font-size: 14px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background-color: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        .box { border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 20px; background-color: #fafafa; }
+        .success-box { background-color: #e6ffed; border: 1px solid #2ea043; padding: 20px; border-radius: 8px; }
+        .key-text { color: #d73a49; font-size: 48px; font-weight: bold; letter-spacing: 5px; margin: 15px 0; }
+        input[type="text"] { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; text-align: center; font-size: 16px; }
+        button { background-color: #0366d6; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; width: 100%; }
+        button:hover { background-color: #005cc5; }
+        .error { color: white; background-color: #d73a49; padding: 10px; border-radius: 5px; font-weight: bold; }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>👋 歡迎</h1>
 
-    <div class="nav-bar">
-        目前登入身分：<span style="font-weight: bold; color: #0366d6;">{{ current_user }}</span> 
-        {% if session.get('is_admin') == 1 %}
-            <span style="background-color: #cb2431; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-left: 5px;">👑 管理員模式</span>
+        {% if error %}
+            <p class="error">{{ error }}</p>
         {% endif %}
-        <a href="/logout" style="margin-left: 15px; color: #d32f2f; text-decoration: none; font-weight: bold;">[登出]</a>
-    </div>
 
-    {% if session.get('is_admin') == 1 %}
-    <div class="admin-box">
-        <h3 style="color: #cb2431; margin-top: 0;">👥 註冊帳號管理面板 (僅管理員可見)</h3>
-        <div style="max-height: 150px; overflow-y: auto; background: white; padding: 10px; border-radius: 6px; border: 1px solid #ffa3a9;">
-            {% for u in users %}
-            <div class="user-item">
-                <span>👤 暱稱：<strong>{{ u[2] }}</strong> ｜ 🔑 登入密碼：<code style="color: #d73a49; font-weight: bold;">{{ u[1] }}</code></span>
-                <form action="/delete_user/{{ u[0] }}" method="POST" style="margin: 0;" onsubmit="return confirm('確定要強力註銷嗎？');">
-                    <button type="submit" class="btn-delete" style="padding: 2px 8px; font-size: 11px;">❌ 註銷帳號</button>
-                </form>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-    {% endif %}
-
-    <div class="main-wrapper">
-        
-        <div class="ai-sidebar">
-            <h3 style="margin-top: 0; color: #4a148c; display: flex; align-items: center;">🤖 系統專屬 AI 小助手</h3>
-            <p style="font-size: 12px; color: #6a1b9a; margin-bottom: 12px;">智慧分流架構：本地端自動啟動開源引擎，雲端自動切換極速智慧保護模式。</p>
-            
-            <div class="ai-chat-box" id="aiChatBox">
-                <div class="msg bot">你好！我是常駐在留言板的 AI 助手。你可以問我任何關於這個網站功能、天氣或新聞的問題喔！</div>
-            </div>
-            
-            <div style="display: flex; gap: 6px;">
-                <input type="text" id="aiInput" placeholder="輸入問題 (如: 專題有什麼功能)..." style="flex: 1; padding: 8px; border: 1px solid #b39ddb; border-radius: 20px; outline: none; font-size: 13px;" onkeypress="if(event.keyCode==13) sendAiMessage()">
-                <button onclick="sendAiMessage()" style="background: #7b1fa2; color: white; border: none; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 13px;">送出</button>
-            </div>
-        </div>
-
-        <div class="right-content">
-            
-            <div class="weather-box">
-                <h3 style="margin-top: 0; color: #33691e;">🌤️ 地名轉座標氣象站</h3>
-                <form action="/" method="GET" style="display: flex; gap: 8px;">
-                    <input type="text" name="location" placeholder="輸入地名 (如: 中壢、墾丁)" style="flex: 1; padding: 8px; border: 1px solid #aed581; border-radius: 6px; outline: none;">
-                    <button type="submit" style="background-color: #558b2f; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">查詢天氣</button>
-                </form>
-                {% if weather %}
-                    <div class="weather-result">
-                        {% if weather.error %}<p style="color: #d32f2f; margin: 0;">❌ {{ weather.error }}</p>
-                        {% else %}
-                            <p style="margin: 0 0 5px 0; color: #2e7d32; font-weight: bold;">📍 搜尋地點：{{ weather.place }}</p>
-                            <span style="color: #ef6c00;">溫度：<strong>{{ weather.temp }} °C</strong></span> ｜ <span>狀況：<strong>{{ weather.weather }}</strong></span>
-                        {% endif %}
-                    </div>
-                {% endif %}
-            </div>
-
-            <div class="news-box">
-                <h3 style="margin-top: 0; color: #e65100;">📰 今日重大焦點新聞 (點擊標題看說明)</h3>
-                <div class="news-list">
-                    {% for n in news %}
-                    <div class="news-item">
-                        <details>
-                            <summary>🔥 {{ n.title }}</summary>
-                            <div style="padding: 10px 5px 5px 5px; font-size: 13px; color: #424242; line-height: 1.4; border-top: 1px dashed #fff59d; margin-top: 5px;">
-                                <p style="margin: 0 0 8px 0;">{{ n.description }}</p>
-                                <a href="{{ n.link }}" target="_blank" style="color: #0366d6; font-weight: bold; text-decoration: none; font-size: 12px;">➔ 點此看完整新聞報導</a>
-                            </div>
-                        </details>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div class="container">
-                <h2>📝 班級動態留言板</h2>
+        {% if new_password %}
+            <div class="success-box">
+                <h3 style="margin-top: 0; color: #2ea043;">🎉 帳號建立成功</h3>
+                <p>你好，<strong>{{ username }}</strong>！<br>這是系統為你配發的專屬密碼：</p>
                 
-                <form action="/" method="POST" enctype="multipart/form-data" style="margin-bottom: 30px;">
-                    <textarea name="message" rows="3" placeholder="有什麼新鮮事想分享嗎？" required></textarea>
-                    <div style="margin-top: 10px;">
-                        <label style="font-size: 14px; color: #555; font-weight: bold;">📷 分享圖片：</label>
-                        <input type="file" name="image" accept="image/*" style="font-size: 14px;">
-                    </div>
-                    <button type="submit" class="submit-btn">發布動態</button>
-                </form>
-
-                <hr style="border: 0; border-top: 1px solid #eee;">
+                <div class="key-text">{{ new_password }}</div>
                 
-                <div class="posts-list">
-                    {% for post in posts %}
-                    <div class="post">
-                        {% if session.get('is_admin') == 1 %}
-                        <form action="/delete_post/{{ post.id }}" method="POST" style="display: inline; float: right; margin-top: -5px;">
-                            <button type="submit" class="btn-delete">🗑️ 刪除貼文</button>
-                        </form>
-                        {% endif %}
-
-                        <div class="author">👤 {{ post.name }}</div>
-                        <div style="margin: 10px 0; font-size: 15px; line-height: 1.5; white-space: pre-wrap;">{{ post.message }}</div>
-                        
-                        {% if post.image_path %}<img src="{{ post.image_path }}" class="post-image" alt="動態圖片">{% endif %}
-                        <div class="time">🕒 {{ post.created_at }}</div>
-                        
-                        <div class="like-section">
-                            <form action="/like/{{ post.id }}" method="POST" style="margin: 0;"><button type="submit" class="like-btn">👍 讚</button></form>
-                            <span class="like-count">{{ post.likes }} 個人覺得很讚</span>
-                        </div>
-
-                        <div class="comments-section">
-                            <div style="font-weight: bold; font-size: 14px; color: #65676b; margin-bottom: 8px;">💬 留言回覆</div>
-                            <div class="comments-list">
-                                {% for comment in post.comments %}
-                                <div class="comment-item">
-                                    <span class="commenter">{{ comment[0] }}</span>：<span>{{ comment[1] }}</span>
-                                    <span style="font-size: 11px; color: #999; float: right;">{{ comment[2] }}</span>
-                                </div>
-                                {% else %}
-                                <p style="font-size: 13px; color: #999; margin: 5px 0; text-align: center;">目前還沒有人留言。</p>
-                                {% endfor %}
-                            </div>
-                            <form action="/comment/{{ post.id }}" method="POST" style="margin-top: 12px; display: flex;">
-                                <input type="text" name="content" class="comment-input" placeholder="寫下你的回覆..." required>
-                                <button type="submit" class="comment-submit">送出</button>
-                            </form>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
+                <p style="font-size: 14px; color: #666;">⚠️ 下次登入只需輸入這 3 個數字<br>請務必牢記！</p>
+                <a href="/" style="display: block; margin-top: 20px; text-decoration: none; background-color: #2ea043; color: white; padding: 12px 20px; border-radius: 5px; font-weight: bold;">進入留言板</a>
             </div>
-        </div>
-    </div>
+        {% else %}
+            <div class="box">
+                <h3 style="margin-top: 0;">🆕 獲取密碼 (建立帳號)</h3>
+                <p style="font-size: 14px; color: #666; margin-bottom: 15px;">第一次來嗎？輸入你的名字來獲取密碼</p>
+                <form action="/register" method="POST">
+                    <input type="text" name="username" placeholder="請輸入你的暱稱" required>
+                    <button type="submit">產生 3 位數密碼</button>
+                </form>
+            </div>
 
-    <script>
-        function sendAiMessage() {
-            const inputEl = document.getElementById('aiInput');
-            const chatBox = document.getElementById('aiChatBox');
-            const prompt = inputEl.value.trim();
-            
-            if (!prompt) return;
-            
-            chatBox.innerHTML += `<div class="msg user">${prompt}</div>`;
-            inputEl.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-            
-            const botLoadingId = 'bot-loading-' + Date.now();
-            chatBox.innerHTML += `<div class="msg bot" id="${botLoadingId}">🤖 正在組織回答中...</div>`;
-            chatBox.scrollTop = chatBox.scrollHeight;
-            
-            fetch('/ai_chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ prompt: prompt })
-            })
-            .then(res => res.json())
-            .then(data => {
-                const loadingEl = document.getElementById(botLoadingId);
-                if (loadingEl) {
-                    loadingEl.innerText = data.reply || data.error;
-                }
-                chatBox.scrollTop = chatBox.scrollHeight;
-            })
-            .catch(err => {
-                const loadingEl = document.getElementById(botLoadingId);
-                if (loadingEl) {
-                    loadingEl.innerText = "🤖 系統忙碌中，請再試一次！";
-                }
-            });
-        }
-    </script>
+            <div class="box">
+                <h3 style="margin-top: 0;">🔑 輸入密碼 (直接登入)</h3>
+                <p style="font-size: 14px; color: #666; margin-bottom: 15px;">已有密碼？輸入 3 位數字自動登入</p>
+                <form action="/login" method="POST">
+                    <input type="text" name="password" placeholder="輸入 3 位數 (例: 123)" required pattern="\d{3}" title="請輸入 3 個數字">
+                    <button type="submit" style="background-color: #2ea043;">登入</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
 </body>
 </html>
