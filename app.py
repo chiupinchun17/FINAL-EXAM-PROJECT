@@ -3,7 +3,7 @@ import sqlite3
 import random
 import os
 import requests
-import xml.etree.ElementTree as ET  # 用來解析免費的新聞 RSS 饋送
+import xml.etree.ElementTree as ET
 from geopy.geocoders import Nominatim
 
 app = Flask(__name__)
@@ -22,7 +22,7 @@ def init_db():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
     
-    # 🔥 強制轟掉舊資料表，確保新聞功能加入時結構乾淨
+    # 這裡保留你原本的強制重置邏輯，確保結構更新
     cursor.execute("DROP TABLE IF EXISTS users")
     cursor.execute("DROP TABLE IF EXISTS posts")
     cursor.execute("DROP TABLE IF EXISTS comments")
@@ -40,12 +40,14 @@ def init_db():
     if not cursor.fetchone():
         cursor.execute("INSERT INTO users (password, username, is_admin) VALUES ('037', '系統管理員', 1)")
     
+    # 【改動點】：在 posts 表中加入 location 欄位
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS posts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             message TEXT NOT NULL,
             image_path TEXT,
+            location TEXT,
             likes INTEGER DEFAULT 0,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
@@ -69,7 +71,7 @@ with app.app_context():
     init_db()
 
 # ==========================================
-# 2. 帳號與密碼系統路由
+# 2. 帳號與密碼系統路由 (保持不變)
 # ==========================================
 
 @app.route('/welcome')
@@ -129,7 +131,7 @@ def logout():
     return redirect(url_for('welcome'))
 
 # ==========================================
-# 3. 🌤️ 免 API 天氣查詢功能
+# 3. 🌤️ 天氣與新聞功能 (保持不變)
 # ==========================================
 def get_weather_by_location(location_name):
     try:
@@ -151,42 +153,27 @@ def get_weather_by_location(location_name):
         return {"error": "氣象系統連線忙碌中。"}
     return {"error": "無法取得天氣資訊。"}
 
-# ==========================================
-# 4. 📰 新增：免 API 今日重大新聞抓取功能 (Yahoo RSS)
-# ==========================================
 def get_today_news():
     news_list = []
     try:
-        # 抓取 Yahoo 焦點新聞的公開 RSS 饋送
         rss_url = "https://tw.news.yahoo.com/rss/realtime"
         headers = {"User-Agent": "Mozilla/5.0"}
         response = requests.get(rss_url, headers=headers, timeout=5)
         response.encoding = 'utf-8'
-        
-        # 解析 XML 結構
         root = ET.fromstring(response.text)
-        # 撈出前 5 則重大新聞
         for item in root.findall('.//item')[:5]:
             title = item.find('title').text
             link = item.find('link').text
             description = item.find('description').text if item.find('description') is not None else "點擊進入查看詳細內容說明。"
-            
-            # 清理摘要文字中可能夾帶的 HTML 標籤
             if "<" in description:
                 description = description.split('<')[0]
-                
-            news_list.append({
-                "title": title,
-                "link": link,
-                "description": description.strip()
-            })
+            news_list.append({"title": title, "link": link, "description": description.strip()})
     except Exception as e:
-        # 如果網路卡住，提供備用歷史提示
         news_list = [{"title": "新聞系統載入中...", "link": "#", "description": "請重新整理網頁以嘗試重新載入最新重大新聞。"}]
     return news_list
 
 # ==========================================
-# 5. 留言板主要功能 (整合天氣與新聞)
+# 5. 留言板主要功能 (整合打卡)
 # ==========================================
 
 @app.route('/', methods=['GET', 'POST'])
@@ -200,6 +187,8 @@ def index():
     if request.method == 'POST':
         name = session.get('username')
         message = request.form.get('message')
+        # 【改動點】：取得 location
+        location = request.form.get('location')
         
         file = request.files.get('image')
         image_path = None
@@ -209,22 +198,21 @@ def index():
             image_path = f"/static/uploads/{filename}"
         
         if message or image_path:
-            cursor.execute("INSERT INTO posts (name, message, image_path, likes) VALUES (?, ?, ?, 0)", 
-                           (name, message, image_path))
+            # 【改動點】：SQL INSERT 加入 location
+            cursor.execute("INSERT INTO posts (name, message, image_path, location, likes) VALUES (?, ?, ?, ?, 0)", 
+                           (name, message, image_path, location))
             conn.commit()
             return redirect(url_for('index'))
 
-    # 處理天氣查詢
     weather_info = None
     search_location = request.args.get('location')
     if search_location:
         weather_info = get_weather_by_location(search_location)
 
-    # 📰 每次重整首頁時，自動抓取最新的今日焦點新聞
     current_news = get_today_news()
 
-    # 讀取貼文
-    cursor.execute("SELECT id, name, message, image_path, likes, created_at FROM posts ORDER BY id DESC")
+    # 【改動點】：讀取貼文 SQL 加入 location
+    cursor.execute("SELECT id, name, message, image_path, location, likes, created_at FROM posts ORDER BY id DESC")
     raw_posts = cursor.fetchall()
     
     posts = []
@@ -234,7 +222,7 @@ def index():
         comments = cursor.fetchall()
         
         posts.append({
-            'id': post[0], 'name': post[1], 'message': post[2], 'image_path': post[3], 'likes': post[4], 'created_at': post[5], 'comments': comments
+            'id': post[0], 'name': post[1], 'message': post[2], 'image_path': post[3], 'location': post[4], 'likes': post[5], 'created_at': post[6], 'comments': comments
         })
         
     users_list = []
@@ -246,7 +234,7 @@ def index():
     return render_template('index.html', posts=posts, users=users_list, weather=weather_info, news=current_news, current_user=session.get('username'))
 
 # ==========================================
-# 6. 管理員與按讚刪除功能路由
+# 6. 管理員與按讚刪除功能路由 (保持不變)
 # ==========================================
 
 @app.route('/like/<int:post_id>', methods=['POST'])

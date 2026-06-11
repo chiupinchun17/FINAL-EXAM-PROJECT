@@ -23,7 +23,6 @@
         .weather-box { background-color: #f1f8e9; border: 1px solid #c5e1a5; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
         .weather-result { background-color: white; padding: 12px; border-radius: 8px; margin-top: 10px; border: 1px solid #dcedc8; font-size: 14px; }
         
-        /* 📰 新聞特區樣式 */
         .news-box { background-color: #fff8e1; border: 1px solid #ffe082; padding: 15px; border-radius: 10px; margin-bottom: 25px; }
         .news-item { background: white; padding: 10px; border-radius: 6px; margin-top: 8px; border: 1px solid #fff59d; text-align: left; }
         summary { font-weight: bold; color: #b78103; cursor: pointer; padding: 5px; outline: none; font-size: 14px; }
@@ -115,6 +114,7 @@
         <form action="/" method="POST" enctype="multipart/form-data" style="margin-bottom: 30px;">
             <textarea name="message" rows="3" placeholder="有什麼新鮮事想分享嗎？" required></textarea>
             <div style="margin-top: 10px;">
+                <input type="text" name="location" placeholder="📍 輸入打卡地點 (選填)" style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccd0d5; border-radius: 8px;">
                 <label style="font-size: 14px; color: #555; font-weight: bold;">📷 分享圖片：</label>
                 <input type="file" name="image" accept="image/*" style="font-size: 14px;">
             </div>
@@ -132,7 +132,16 @@
                 </form>
                 {% endif %}
 
-                <div class="author">👤 {{ post.name }}</div>
+                <div class="author">
+                    👤 {{ post.name }}
+                    {% if post.location %}
+                    <span style="font-size: 14px; font-weight: normal; color: #65676b;"> — 在 
+                        <a href="https://www.google.com/maps/search/?api=1&query={{ post.location }}" target="_blank" style="color: #1877f2; text-decoration: none; font-weight: bold;">
+                            📍 {{ post.location }}
+                        </a>
+                    </span>
+                    {% endif %}
+                </div>
                 <div style="margin: 10px 0; font-size: 15px; line-height: 1.5; white-space: pre-wrap;">{{ post.message }}</div>
                 
                 {% if post.image_path %}<img src="{{ post.image_path }}" class="post-image" alt="動態圖片">{% endif %}
