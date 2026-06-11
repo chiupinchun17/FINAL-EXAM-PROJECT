@@ -46,12 +46,22 @@
         .admin-box { max-width: 600px; margin: 20px auto; background: #fff0f1; border: 1px solid #ffccd0; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .user-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #ffd5d8; font-size: 14px; }
         .user-item:last-child { border-bottom: none; }
+
+        /* 🌟 打卡輸入框的專屬樣式 */
+        .location-input-box { margin-top: 12px; display: flex; align-items: center; font-size: 14px; color: #555; font-weight: bold; }
+        .location-field { padding: 6px 10px; border: 1px solid #ccd0d5; border-radius: 6px; font-size: 13px; width: 180px; margin-left: 8px; outline: none; transition: 0.2s; }
+        .location-field:focus { border-color: #1877f2; box-shadow: 0 0 4px rgba(24,119,242,0.2); }
+
+        /* 🌟 修改：打卡超連結的樣式與懸停效果 */
+        .fb-location { color: #65676b; font-weight: normal; margin-left: 5px; font-size: 14px; }
+        .map-link { color: #1877f2; text-decoration: none; font-weight: bold; }
+        .map-link:hover { text-decoration: underline; color: #1565c0; }
     </style>
 </head>
 <body>
 
     <div class="nav-bar">
-        目前登入身分：<span style="font-weight: bold; color: #0366d6;">{{ current_user }}</span> 
+        目前登入身分：<span style="font-weight: bold; color: #0366d6;">{{ current_user }}</span>
         {% if session.get('is_admin') == 1 %}
             <span style="background-color: #cb2431; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-left: 5px;">👑 管理員模式</span>
         {% endif %}
@@ -75,7 +85,7 @@
     {% endif %}
 
     <div class="container">
-        
+
         <div class="weather-box">
             <h3 style="margin-top: 0; color: #33691e;">🌤️ 地名轉座標氣象站</h3>
             <form action="/" method="GET" style="display: flex; gap: 8px;">
@@ -111,18 +121,27 @@
         </div>
 
         <h2>📝 班級動態留言板</h2>
-        
+
         <form action="/" method="POST" enctype="multipart/form-data" style="margin-bottom: 30px;">
             <textarea name="message" rows="3" placeholder="有什麼新鮮事想分享嗎？" required></textarea>
-            <div style="margin-top: 10px;">
-                <label style="font-size: 14px; color: #555; font-weight: bold;">📷 分享圖片：</label>
-                <input type="file" name="image" accept="image/*" style="font-size: 14px;">
+
+            <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+                <div>
+                    <label style="font-size: 14px; color: #555; font-weight: bold;">📷 分享圖片：</label>
+                    <input type="file" name="image" accept="image/*" style="font-size: 14px;">
+                </div>
+
+                <div class="location-input-box">
+                    <span>📍 在哪裡打卡？</span>
+                    <input type="text" name="location" class="location-field" placeholder="例如：元智大學、台北 101...">
+                </div>
             </div>
+
             <button type="submit" class="submit-btn">發布動態</button>
         </form>
 
         <hr style="border: 0; border-top: 1px solid #eee;">
-        
+
         <div class="posts-list">
             {% for post in posts %}
             <div class="post">
@@ -132,7 +151,20 @@
                 </form>
                 {% endif %}
 
-                <div class="author">👤 {{ post.name }}</div>
+                <div class="author">
+                    <span>👤 {{ post.name }}</span>
+                    {% if post.location %}
+                        <span class="fb-location"> — 在
+                            <a href="https://www.google.com/maps/search/?api=1&query={{ post.location }}"
+                               target="_blank"
+                               title="在 Google Maps 上查看此地點"
+                               class="map-link">
+                               📍 {{ post.location }}
+                            </a>
+                        </span>
+                    {% endif %}
+                </div>
+
                 <div style="margin: 10px 0; font-size: 15px; line-height: 1.5; white-space: pre-wrap;">{{ post.message }}</div>
                 
                 {% if post.image_path %}<img src="{{ post.image_path }}" class="post-image" alt="動態圖片">{% endif %}
